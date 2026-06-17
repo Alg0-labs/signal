@@ -1,0 +1,6 @@
+.env
+node_modules
+dist
+.env.local
+.DS_Store
+debug/raw-news/

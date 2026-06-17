@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: oracle-backend
+    runtime: node
+    rootDir: backend
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: ANTHROPIC_API_KEY
+        sync: false        # means you'll enter it manually in dashboard
+      - key: MORALIS_API_KEY
+        sync: false
+      - key: ETHERSCAN_API_KEY
+        sync: false
+      - key: FRONTEND_URL
+        sync: false
