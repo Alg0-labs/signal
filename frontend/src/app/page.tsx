@@ -10,7 +10,7 @@ import { FadeIn, Stagger, StaggerItem, AnimatedNumber } from "@/components/ui/mo
 import { ChartAnalystDemo } from "@/components/landing/chart-analyst-demo";
 import { CoinField } from "@/components/landing/coin-field";
 
-const MCP_URL = "https://crypto-portfolio-mcp.onrender.com";
+const MCP_URL = "https://crypto-portfolio-mcp.vercel.app/";
 
 const features = [
   {
@@ -205,7 +205,7 @@ export default function LandingPage() {
             <ExternalLink className="w-3.5 h-3.5 text-[var(--text-muted)] group-hover:text-[var(--text-secondary)] group-hover:translate-x-0.5 transition-all" />
           </a>
           <p className="text-[var(--text-muted)] text-xs mt-6">
-            Built on Claude AI · Model Context Protocol · Real-time on-chain data
+            Made with ❤️ by Vibhu
           </p>
         </FadeIn>
       </div>
