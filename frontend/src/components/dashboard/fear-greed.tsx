@@ -2,6 +2,8 @@
 
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/states";
+import { AnimatedNumber } from "@/components/ui/motion";
 import type { MarketContext } from "@/lib/api";
 import { TrendingUp, TrendingDown, Minus } from "lucide-react";
 
@@ -11,18 +13,18 @@ interface FearGreedProps {
 }
 
 function getColor(value: number) {
-  if (value >= 75) return { text: "#00ff88", bg: "rgba(0,255,136,0.15)", label: "Extreme Greed" };
-  if (value >= 55) return { text: "#8b5cf6", bg: "rgba(139,92,246,0.15)", label: "Greed" };
-  if (value >= 45) return { text: "#f59e0b", bg: "rgba(245,158,11,0.15)", label: "Neutral" };
-  if (value >= 25) return { text: "#f97316", bg: "rgba(249,115,22,0.15)", label: "Fear" };
-  return { text: "#ff4d6d", bg: "rgba(255,77,109,0.15)", label: "Extreme Fear" };
+  if (value >= 75) return { text: "#34d399", bg: "rgba(52,211,153,0.15)", label: "Extreme Greed" };
+  if (value >= 55) return { text: "#8b7bf6", bg: "rgba(139,123,246,0.15)", label: "Greed" };
+  if (value >= 45) return { text: "#fbbf24", bg: "rgba(251,191,36,0.15)", label: "Neutral" };
+  if (value >= 25) return { text: "#fb923c", bg: "rgba(251,146,60,0.15)", label: "Fear" };
+  return { text: "#fb6a82", bg: "rgba(251,106,130,0.15)", label: "Extreme Fear" };
 }
 
 export function FearGreedWidget({ data, loading }: FearGreedProps) {
   if (loading) {
     return (
-      <Card className="animate-pulse">
-        <div className="h-24 bg-white/5 rounded-xl" />
+      <Card>
+        <Skeleton className="h-24" />
       </Card>
     );
   }
@@ -60,7 +62,7 @@ export function FearGreedWidget({ data, loading }: FearGreedProps) {
             <path
               d="M 10 50 A 40 40 0 0 1 90 50"
               fill="none"
-              stroke="#1e1e2e"
+              stroke="var(--border)"
               strokeWidth="8"
               strokeLinecap="round"
             />
@@ -72,7 +74,6 @@ export function FearGreedWidget({ data, loading }: FearGreedProps) {
               strokeWidth="8"
               strokeLinecap="round"
               strokeDasharray={`${(value / 100) * 125.66} 125.66`}
-              style={{ filter: `drop-shadow(0 0 4px ${color.text})` }}
             />
             {/* Needle */}
             <line
@@ -80,27 +81,24 @@ export function FearGreedWidget({ data, loading }: FearGreedProps) {
               y1="50"
               x2={50 + 32 * Math.cos(((angle - 90) * Math.PI) / 180)}
               y2={50 + 32 * Math.sin(((angle - 90) * Math.PI) / 180)}
-              stroke="#f0f0ff"
+              stroke="var(--text-primary)"
               strokeWidth="1.5"
               strokeLinecap="round"
             />
-            <circle cx="50" cy="50" r="3" fill="#f0f0ff" />
+            <circle cx="50" cy="50" r="3" fill="var(--text-primary)" />
           </svg>
         </div>
 
         {/* Value */}
         <div>
-          <div
-            className="text-4xl font-bold tabular-nums"
-            style={{ color: color.text, textShadow: `0 0 20px ${color.text}60` }}
-          >
-            {value}
+          <div className="text-4xl font-semibold tabular" style={{ color: color.text }}>
+            <AnimatedNumber value={value} />
           </div>
           <div className="text-sm font-medium mt-0.5" style={{ color: color.text }}>
             {color.label}
           </div>
           {data?.label && (
-            <div className="text-xs text-[#8888aa] mt-0.5">{data.label}</div>
+            <div className="text-xs text-[var(--text-secondary)] mt-0.5">{data.label}</div>
           )}
         </div>
       </div>

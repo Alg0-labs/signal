@@ -17,7 +17,7 @@ const variantMap: Record<BadgeVariant, string> = {
   yellow: "tag-yellow",
   purple: "tag-purple",
   blue: "tag-blue",
-  gray: "bg-white/5 text-[#8888aa] border border-white/10",
+  gray: "bg-white/5 text-[var(--text-secondary)] border border-white/10",
 };
 
 export function Badge({ children, variant = "gray", className, dot }: BadgeProps) {
@@ -26,12 +26,12 @@ export function Badge({ children, variant = "gray", className, dot }: BadgeProps
       {dot && (
         <span
           className={cn("w-1.5 h-1.5 rounded-full inline-block", {
-            "bg-[#00ff88]": variant === "green",
-            "bg-[#ff4d6d]": variant === "red",
-            "bg-[#f59e0b]": variant === "yellow",
-            "bg-[#8b5cf6]": variant === "purple",
+            "bg-[#34d399]": variant === "green",
+            "bg-[#fb6a82]": variant === "red",
+            "bg-[#fbbf24]": variant === "yellow",
+            "bg-[#8b7bf6]": variant === "purple",
             "bg-[#60a5fa]": variant === "blue",
-            "bg-[#8888aa]": variant === "gray",
+            "bg-[#7a7f94]": variant === "gray",
           })}
         />
       )}

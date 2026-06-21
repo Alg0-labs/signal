@@ -6,15 +6,15 @@ import { TrendingUp, TrendingDown, Minus } from "lucide-react";
 const fmt = (n: number | null) =>
   n === null ? "—" : n >= 1000 ? Math.round(n).toLocaleString() : n.toFixed(2);
 
-const GREEN = "#00ff88";
-const RED = "#ff4d6d";
-const AMBER = "#f59e0b";
+const GREEN = "#34d399";
+const RED = "#fb6a82";
+const AMBER = "#fbbf24";
 
 function Metric({ label, value, color }: { label: string; value: string; color?: string }) {
   return (
     <div className="text-center">
-      <p className="text-[9px] text-[#44445a] uppercase tracking-wider">{label}</p>
-      <p className="text-xs font-bold font-mono mt-0.5" style={{ color: color ?? "#f0f0ff" }}>{value}</p>
+      <p className="text-[9px] text-[var(--text-muted)] uppercase tracking-wider">{label}</p>
+      <p className="text-xs font-bold font-mono mt-0.5" style={{ color: color ?? "#f4f5fb" }}>{value}</p>
     </div>
   );
 }
@@ -32,24 +32,24 @@ export function AnalysisCard({ ta, analogs, pattern, orderFlow }: { ta: Technica
   const ma = ta.movingAverages;
   const volColor = ta.volume.ratio >= 1.3 ? GREEN : ta.volume.ratio <= 0.6 ? RED : AMBER;
   const rsiColor =
-    ta.momentum.rsiState === "overbought" ? RED : ta.momentum.rsiState === "oversold" ? GREEN : "#f0f0ff";
+    ta.momentum.rsiState === "overbought" ? RED : ta.momentum.rsiState === "oversold" ? GREEN : "#f4f5fb";
 
   return (
-    <div className="bg-[#0d0d14] border border-[#1e1e2e] rounded-xl p-3 mb-2 text-left">
+    <div className="bg-[var(--bg-elev)] border border-[var(--border)] rounded-xl p-3 mb-2 text-left">
       {/* Trend header */}
       <div className="flex items-center justify-between mb-2.5">
         <div className="flex items-center gap-1.5" style={{ color: trendColor }}>
           <TrendIcon className="w-3.5 h-3.5" />
           <span className="text-xs font-bold uppercase">{ta.trend.direction}</span>
-          <span className="text-[10px] text-[#8888aa]">({ta.trend.strength})</span>
+          <span className="text-[10px] text-[var(--text-secondary)]">({ta.trend.strength})</span>
         </div>
-        <span className="text-xs font-mono text-[#f0f0ff]">${fmt(ta.price)}</span>
+        <span className="text-xs font-mono text-[var(--text-primary)]">${fmt(ta.price)}</span>
       </div>
 
       {/* Metric grid */}
       <div className="grid grid-cols-4 gap-2 mb-2.5">
         <Metric label="RSI" value={ta.momentum.rsi !== null ? ta.momentum.rsi.toFixed(0) : "—"} color={rsiColor} />
-        <Metric label="MACD" value={ta.momentum.macdState} color={ta.momentum.macdState === "bullish" ? GREEN : ta.momentum.macdState === "bearish" ? RED : "#8888aa"} />
+        <Metric label="MACD" value={ta.momentum.macdState} color={ta.momentum.macdState === "bullish" ? GREEN : ta.momentum.macdState === "bearish" ? RED : "#b4b8c9"} />
         <Metric label="MA Stack" value={ma.stack} color={ma.stack === "bullish" ? GREEN : ma.stack === "bearish" ? RED : AMBER} />
         <Metric label="Vol" value={`${ta.volume.ratio.toFixed(2)}×`} color={volColor} />
       </div>
@@ -62,21 +62,21 @@ export function AnalysisCard({ ta, analogs, pattern, orderFlow }: { ta: Technica
         <Metric
           label="BTC corr"
           value={ta.correlation.withBTC !== null ? ta.correlation.withBTC.toFixed(2) : "—"}
-          color={ta.correlation.withBTC !== null && Math.abs(ta.correlation.withBTC) > 0.7 ? AMBER : "#f0f0ff"}
+          color={ta.correlation.withBTC !== null && Math.abs(ta.correlation.withBTC) > 0.7 ? AMBER : "#f4f5fb"}
         />
       </div>
 
       {/* Detected pattern (range-select) */}
       {pattern && pattern.name !== "No clear pattern" && (
         <div className="mb-2.5 flex items-center gap-2 bg-white/[0.03] rounded-lg px-2 py-1.5">
-          <span className="text-[9px] uppercase tracking-wider text-[#44445a]">Pattern</span>
+          <span className="text-[9px] uppercase tracking-wider text-[var(--text-muted)]">Pattern</span>
           <span
             className="text-xs font-bold"
             style={{ color: pattern.bias === "bullish" ? GREEN : pattern.bias === "bearish" ? RED : AMBER }}
           >
             {pattern.name}
           </span>
-          <span className="text-[9px] text-[#8888aa] uppercase">{pattern.confidence} conf</span>
+          <span className="text-[9px] text-[var(--text-secondary)] uppercase">{pattern.confidence} conf</span>
         </div>
       )}
 
@@ -89,7 +89,7 @@ export function AnalysisCard({ ta, analogs, pattern, orderFlow }: { ta: Technica
               className="text-[9px] font-mono px-1.5 py-0.5 rounded-md"
               style={{
                 color: l.kind === "support" ? GREEN : RED,
-                background: l.kind === "support" ? "rgba(0,255,136,0.08)" : "rgba(255,77,109,0.08)",
+                background: l.kind === "support" ? "rgba(52,211,153,0.1)" : "rgba(251,106,130,0.1)",
               }}
               title={`${l.kind} · ${l.touches} touches`}
             >
@@ -103,7 +103,7 @@ export function AnalysisCard({ ta, analogs, pattern, orderFlow }: { ta: Technica
 
       {/* Order flow (live) */}
       {orderFlow && (
-        <div className="grid grid-cols-3 gap-2 mb-2.5 pt-2 border-t border-[#1e1e2e]">
+        <div className="grid grid-cols-3 gap-2 mb-2.5 pt-2 border-t border-[var(--border)]">
           <Metric
             label="Taker buy"
             value={`${orderFlow.buyVolumePct.toFixed(0)}%`}
@@ -112,22 +112,22 @@ export function AnalysisCard({ ta, analogs, pattern, orderFlow }: { ta: Technica
           <Metric
             label="CVD 24h"
             value={orderFlow.cvdTrend}
-            color={orderFlow.cvdTrend === "accumulation" ? GREEN : orderFlow.cvdTrend === "distribution" ? RED : "#8888aa"}
+            color={orderFlow.cvdTrend === "accumulation" ? GREEN : orderFlow.cvdTrend === "distribution" ? RED : "#b4b8c9"}
           />
           <Metric
             label="Book"
             value={`${(orderFlow.bookImbalance * 100).toFixed(0)}% bid`}
-            color={orderFlow.bookBias === "bid-heavy" ? GREEN : orderFlow.bookBias === "ask-heavy" ? RED : "#8888aa"}
+            color={orderFlow.bookBias === "bid-heavy" ? GREEN : orderFlow.bookBias === "ask-heavy" ? RED : "#b4b8c9"}
           />
         </div>
       )}
 
       {/* Historical analogs */}
       {analogs && (
-        <div className="pt-2 border-t border-[#1e1e2e]">
+        <div className="pt-2 border-t border-[var(--border)]">
           <div className="flex items-center justify-between mb-1">
-            <span className="text-[9px] text-[#8b5cf6] uppercase tracking-wider font-semibold">🕰️ Historical echo</span>
-            <span className="text-[9px] text-[#44445a]">{analogs.sampleSize} analogs</span>
+            <span className="text-[9px] text-[var(--accent)] uppercase tracking-wider font-semibold">🕰️ Historical echo</span>
+            <span className="text-[9px] text-[var(--text-muted)]">{analogs.sampleSize} analogs</span>
           </div>
           <div className="grid grid-cols-3 gap-2">
             <Metric label="Up 3d" value={`${analogs.bullishPct3d.toFixed(0)}%`} color={analogs.bullishPct3d >= 50 ? GREEN : RED} />
@@ -135,7 +135,7 @@ export function AnalysisCard({ ta, analogs, pattern, orderFlow }: { ta: Technica
             <Metric label="Avg 7d" value={`${analogs.avgRet7d >= 0 ? "+" : ""}${analogs.avgRet7d.toFixed(1)}%`} color={analogs.avgRet7d >= 0 ? GREEN : RED} />
           </div>
           {analogs.matches[0] && (
-            <p className="text-[9px] text-[#44445a] mt-1.5">
+            <p className="text-[9px] text-[var(--text-muted)] mt-1.5">
               Closest: {new Date(analogs.matches[0].date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}{" "}
               ({(analogs.matches[0].similarity * 100).toFixed(0)}% similar)
             </p>

@@ -71,8 +71,8 @@ export default function CopilotPage() {
 
         {/* Page header */}
         <div className="mb-5">
-          <h1 className="text-xl font-black text-[#f0f0ff]">Trading Copilot</h1>
-          <p className="text-[#8888aa] text-xs mt-0.5">
+          <h1 className="text-xl font-semibold tracking-tight text-[var(--text-primary)]">Trading Copilot</h1>
+          <p className="text-[var(--text-secondary)] text-xs mt-0.5">
             Quick signals in ~3s · Deep multi-agent analysis in ~30s
           </p>
         </div>
@@ -90,14 +90,14 @@ export default function CopilotPage() {
 
             {/* Chart symbol picker below inputs */}
             <div className="mt-4">
-              <p className="text-[10px] font-semibold text-[#44445a] uppercase tracking-wider mb-2 px-1">Chart</p>
+              <p className="text-[10px] font-semibold text-[var(--text-muted)] uppercase tracking-wider mb-2 px-1">Chart</p>
               <div className="flex flex-wrap gap-1.5">
                 {CHART_SYMBOLS.map((s) => (
                   <button key={s} onClick={() => setChartSymbol(s)}
                     className={`px-3 py-1 rounded-lg text-xs font-semibold border transition-all ${
                       chartSymbol === s
-                        ? "bg-[#8b5cf6]/20 border-[#8b5cf6]/40 text-[#8b5cf6]"
-                        : "bg-white/5 border-[#1e1e2e] text-[#8888aa] hover:border-[#2a2a3e] hover:text-[#f0f0ff]"
+                        ? "bg-[var(--accent)]/20 border-[var(--accent)]/40 text-[var(--accent)]"
+                        : "bg-white/5 border-[var(--border)] text-[var(--text-secondary)] hover:border-[var(--border-bright)] hover:text-[var(--text-primary)]"
                     }`}>
                     {s}
                   </button>
@@ -111,13 +111,13 @@ export default function CopilotPage() {
 
           {/* ── Col 2: Quick results ── */}
           <div className="lg:overflow-y-auto lg:max-h-[calc(100vh-120px)]">
-            <p className="text-[10px] font-semibold text-[#44445a] uppercase tracking-wider mb-3 px-1">Quick Analysis</p>
+            <p className="text-[10px] font-semibold text-[var(--text-muted)] uppercase tracking-wider mb-3 px-1">Quick Analysis</p>
             <QuickResultsPanel state={state} onStartDeep={handleStartDeep} />
           </div>
 
           {/* ── Col 3: Deep results ── */}
           <div className="lg:overflow-y-auto lg:max-h-[calc(100vh-120px)]">
-            <p className="text-[10px] font-semibold text-[#44445a] uppercase tracking-wider mb-3 px-1">Deep Analysis</p>
+            <p className="text-[10px] font-semibold text-[var(--text-muted)] uppercase tracking-wider mb-3 px-1">Deep Analysis</p>
             <DeepResultsPanel state={state} />
           </div>
 

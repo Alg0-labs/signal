@@ -1,6 +1,8 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { spring } from "@/components/ui/motion";
 
 interface CardProps {
   children: React.ReactNode;
@@ -8,13 +10,21 @@ interface CardProps {
   style?: React.CSSProperties;
   glow?: "green" | "purple" | "blue" | "none";
   onClick?: () => void;
+  /** Animate in on mount with a spring. */
+  animate?: boolean;
+  delay?: number;
 }
 
-export function Card({ children, className, style, glow = "none", onClick }: CardProps) {
+export function Card({ children, className, style, glow = "none", onClick, animate = false, delay = 0 }: CardProps) {
   return (
-    <div
+    <motion.div
       onClick={onClick}
       style={style}
+      initial={animate ? { opacity: 0, y: 14 } : false}
+      animate={animate ? { opacity: 1, y: 0 } : undefined}
+      transition={{ ...spring, delay }}
+      whileHover={onClick ? { y: -2 } : undefined}
+      whileTap={onClick ? { scale: 0.985 } : undefined}
       className={cn(
         "card-glow p-5 relative overflow-hidden",
         glow === "green" && "glow-green",
@@ -25,7 +35,7 @@ export function Card({ children, className, style, glow = "none", onClick }: Car
       )}
     >
       {children}
-    </div>
+    </motion.div>
   );
 }
 
@@ -39,7 +49,7 @@ export function CardHeader({ children, className }: { children: React.ReactNode;
 
 export function CardTitle({ children, className }: { children: React.ReactNode; className?: string }) {
   return (
-    <h3 className={cn("text-sm font-semibold text-[#8888aa] uppercase tracking-wider", className)}>
+    <h3 className={cn("text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-[0.08em]", className)}>
       {children}
     </h3>
   );

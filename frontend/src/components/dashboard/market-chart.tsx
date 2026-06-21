@@ -24,8 +24,8 @@ import {
 } from "@/lib/binance";
 import { formatPrice, formatPercent, formatMarketCap } from "@/lib/utils";
 
-const GREEN = "#00ff88";
-const RED = "#ff4d6d";
+const GREEN = "#34d399";
+const RED = "#fb6a82";
 
 type ChartType = "candle" | "line";
 
@@ -77,20 +77,20 @@ export function MarketChart({ symbol, onCandleClick, onRangeSelect }: MarketChar
       autoSize: true,
       layout: {
         background: { type: ColorType.Solid, color: "transparent" },
-        textColor: "#8888aa",
+        textColor: "#b4b8c9",
         fontFamily: "inherit",
       },
       grid: {
-        vertLines: { color: "rgba(30,30,46,0.5)" },
-        horzLines: { color: "rgba(30,30,46,0.5)" },
+        vertLines: { color: "rgba(35,37,47,0.6)" },
+        horzLines: { color: "rgba(35,37,47,0.6)" },
       },
       crosshair: {
         mode: CrosshairMode.Normal,
-        vertLine: { color: "#44445a", labelBackgroundColor: "#8b5cf6" },
-        horzLine: { color: "#44445a", labelBackgroundColor: "#8b5cf6" },
+        vertLine: { color: "#7a7f94", labelBackgroundColor: "#7c6cf0" },
+        horzLine: { color: "#7a7f94", labelBackgroundColor: "#7c6cf0" },
       },
-      rightPriceScale: { borderColor: "#1e1e2e" },
-      timeScale: { borderColor: "#1e1e2e", timeVisible: true, secondsVisible: false },
+      rightPriceScale: { borderColor: "#23252f" },
+      timeScale: { borderColor: "#23252f", timeVisible: true, secondsVisible: false },
     });
 
     if (type === "candle") {
@@ -104,8 +104,8 @@ export function MarketChart({ symbol, onCandleClick, onRangeSelect }: MarketChar
     } else {
       priceSeries = chart.addSeries(AreaSeries, {
         lineColor: GREEN,
-        topColor: "rgba(0,255,136,0.25)",
-        bottomColor: "rgba(0,255,136,0)",
+        topColor: "rgba(52,211,153,0.25)",
+        bottomColor: "rgba(52,211,153,0)",
         lineWidth: 2,
       });
     }
@@ -164,7 +164,7 @@ export function MarketChart({ symbol, onCandleClick, onRangeSelect }: MarketChar
           candles.map((c) => ({
             time: c.time,
             value: c.volume,
-            color: c.close >= c.open ? "rgba(0,255,136,0.4)" : "rgba(255,77,109,0.4)",
+            color: c.close >= c.open ? "rgba(52,211,153,0.4)" : "rgba(251,106,130,0.4)",
           }))
         );
 
@@ -194,7 +194,7 @@ export function MarketChart({ symbol, onCandleClick, onRangeSelect }: MarketChar
           volumeSeries.update({
             time: c.time,
             value: c.volume,
-            color: c.close >= c.open ? "rgba(0,255,136,0.4)" : "rgba(255,77,109,0.4)",
+            color: c.close >= c.open ? "rgba(52,211,153,0.4)" : "rgba(251,106,130,0.4)",
           });
         });
       })
@@ -241,16 +241,16 @@ export function MarketChart({ symbol, onCandleClick, onRangeSelect }: MarketChar
           <div className="flex items-center gap-1.5">
             <span
               className={`w-1.5 h-1.5 rounded-full ${
-                connected ? "bg-[#00ff88] animate-pulse" : "bg-[#44445a]"
+                connected ? "bg-[var(--success)] animate-pulse" : "bg-[var(--text-muted)]"
               }`}
             />
-            <h3 className="text-base font-bold text-[#f0f0ff]">{symbol} / USDT</h3>
+            <h3 className="text-base font-bold text-[var(--text-primary)]">{symbol} / USDT</h3>
           </div>
           <Badge variant={isUp ? "green" : "red"}>{formatPercent(change)}</Badge>
         </div>
 
         <div className="flex items-center gap-3">
-          <p className="text-lg font-bold text-[#f0f0ff] tabular-nums">{formatPrice(price)}</p>
+          <p className="text-lg font-bold text-[var(--text-primary)] tabular-nums">{formatPrice(price)}</p>
           {/* Chart type toggle */}
           <div className="flex bg-white/5 rounded-lg p-0.5">
             {(["candle", "line"] as ChartType[]).map((t) => (
@@ -258,7 +258,7 @@ export function MarketChart({ symbol, onCandleClick, onRangeSelect }: MarketChar
                 key={t}
                 onClick={() => setType(t)}
                 className={`px-2.5 py-1 text-[10px] font-semibold uppercase rounded-md transition ${
-                  type === t ? "bg-[#8b5cf6] text-white" : "text-[#8888aa] hover:text-[#f0f0ff]"
+                  type === t ? "bg-[var(--accent)] text-white" : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
                 }`}
               >
                 {t === "candle" ? "Candles" : "Line"}
@@ -276,8 +276,8 @@ export function MarketChart({ symbol, onCandleClick, onRangeSelect }: MarketChar
             onClick={() => setInterval(value)}
             className={`px-2.5 py-1 text-[10px] font-bold rounded-md transition ${
               interval === value
-                ? "bg-[#00ff88]/15 text-[#00ff88]"
-                : "text-[#44445a] hover:text-[#8888aa]"
+                ? "bg-[var(--success)]/15 text-[var(--success)]"
+                : "text-[var(--text-muted)] hover:text-[var(--text-secondary)]"
             }`}
           >
             {label}
@@ -292,19 +292,19 @@ export function MarketChart({ symbol, onCandleClick, onRangeSelect }: MarketChar
               setRangeHint(next ? "Click the start candle…" : null);
             }}
             className={`ml-auto px-2.5 py-1 text-[10px] font-bold rounded-md transition ${
-              rangeMode ? "bg-[#8b5cf6] text-white" : "text-[#8888aa] hover:text-[#8b5cf6] bg-white/5"
+              rangeMode ? "bg-[var(--accent)] text-white" : "text-[var(--text-secondary)] hover:text-[var(--accent)] bg-white/5"
             }`}
           >
             {rangeMode ? "Selecting…" : "⛶ Mark range"}
           </button>
         )}
       </div>
-      {rangeHint && <p className="text-[10px] text-[#8b5cf6] mb-2 -mt-1">{rangeHint}</p>}
+      {rangeHint && <p className="text-[10px] text-[var(--accent)] mb-2 -mt-1">{rangeHint}</p>}
 
       {/* Chart */}
       <div className="relative w-full" style={{ height: 320 }}>
         {error && (
-          <div className="absolute inset-0 flex items-center justify-center text-sm text-[#ff4d6d]">
+          <div className="absolute inset-0 flex items-center justify-center text-sm text-[var(--danger)]">
             Failed to load market data for {pair}
           </div>
         )}
@@ -312,15 +312,15 @@ export function MarketChart({ symbol, onCandleClick, onRangeSelect }: MarketChar
       </div>
 
       {/* 24h stat row */}
-      <div className="grid grid-cols-3 gap-3 mt-3 pt-3 border-t border-[#1e1e2e]">
+      <div className="grid grid-cols-3 gap-3 mt-3 pt-3 border-t border-[var(--border)]">
         {[
           { label: "24h High", value: formatPrice(stats?.high ?? 0) },
           { label: "24h Low", value: formatPrice(stats?.low ?? 0) },
           { label: "24h Vol", value: formatMarketCap(stats?.quoteVolume ?? 0) },
         ].map(({ label, value }) => (
           <div key={label} className="text-center">
-            <p className="text-[10px] text-[#44445a] uppercase tracking-wider">{label}</p>
-            <p className="text-xs font-semibold text-[#f0f0ff] font-mono mt-0.5">{value}</p>
+            <p className="text-[10px] text-[var(--text-muted)] uppercase tracking-wider">{label}</p>
+            <p className="text-xs font-semibold text-[var(--text-primary)] font-mono mt-0.5">{value}</p>
           </div>
         ))}
       </div>

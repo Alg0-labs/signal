@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SIGNAL — Crypto Trading Intelligence",
-  description: "AI-powered crypto trading signals. Real-time analysis, multi-agent intelligence, Gen-Z approved.",
+  title: "SIGNAL — AI Crypto Trading Intelligence",
+  description: "Trade with conviction. SIGNAL turns real-time market data into clear, explainable decisions — multi-agent AI analysis, a conversational chart analyst, and disciplined risk management.",
   keywords: ["crypto", "trading", "signals", "AI", "Bitcoin", "Ethereum"],
 };
 
@@ -29,7 +29,7 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full`}
     >
-      <body className="min-h-full flex flex-col bg-[#050508] text-[#f0f0ff] antialiased">
+      <body className="min-h-full flex flex-col bg-[var(--bg-base)] text-[var(--text-primary)] antialiased">
         <Providers>{children}</Providers>
       </body>
     </html>

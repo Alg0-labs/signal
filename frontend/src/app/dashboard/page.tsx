@@ -39,8 +39,8 @@ export default function DashboardPage() {
       <Navbar />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
         <div className="mb-8">
-          <h1 className="text-2xl font-black text-[#f0f0ff]">Market Dashboard</h1>
-          <p className="text-[#8888aa] text-sm mt-1">Real-time market intelligence</p>
+          <h1 className="text-2xl font-semibold tracking-tight text-[var(--text-primary)]">Market Dashboard</h1>
+          <p className="text-[var(--text-secondary)] text-sm mt-1">Real-time market intelligence</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -78,7 +78,7 @@ export default function DashboardPage() {
                 <div className="space-y-2.5">
                   {market.portfolioImpact.map((item, i) => (
                     <div key={i} className="flex items-center justify-between">
-                      <span className="text-sm font-medium text-[#f0f0ff]">{item.symbol}</span>
+                      <span className="text-sm font-medium text-[var(--text-primary)]">{item.symbol}</span>
                       <div className="flex items-center gap-2">
                         <Badge variant={item.priceChange >= 0 ? "green" : "red"}>
                           {item.priceChange >= 0 ? (

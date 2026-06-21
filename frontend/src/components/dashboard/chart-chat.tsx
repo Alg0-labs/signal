@@ -104,14 +104,14 @@ export function ChartChat({ symbol, focus, selection }: ChartChatProps) {
     <Card className="flex flex-col" style={{ height: 520 }}>
       <CardHeader>
         <div className="flex items-center gap-2">
-          <MessageSquare className="w-4 h-4 text-[#8b5cf6]" />
+          <MessageSquare className="w-4 h-4 text-[var(--accent)]" />
           <CardTitle>Talk to the {symbol} chart</CardTitle>
         </div>
-        <span className="text-[10px] text-[#44445a] uppercase tracking-wider">RAG · live data</span>
+        <span className="text-[10px] text-[var(--text-muted)] uppercase tracking-wider">RAG · live data</span>
       </CardHeader>
 
       {ragWarn && (
-        <div className="mb-2 text-[10px] text-[#f59e0b] bg-[#f59e0b]/10 rounded-md px-2 py-1">
+        <div className="mb-2 text-[10px] text-[var(--warning)] bg-[rgba(251,191,36,0.1)] rounded-md px-2 py-1">
           News retrieval not configured — answering from technicals only.
         </div>
       )}
@@ -120,13 +120,16 @@ export function ChartChat({ symbol, focus, selection }: ChartChatProps) {
       <div ref={scrollRef} className="flex-1 overflow-y-auto space-y-3 pr-1">
         {messages.length === 0 && !loading && (
           <div className="h-full flex flex-col items-center justify-center text-center gap-3">
-            <p className="text-xs text-[#44445a]">Ask about price action, or click any candle on the chart.</p>
+            <div className="w-10 h-10 rounded-xl bg-[var(--accent-soft)] border border-[var(--border-bright)] flex items-center justify-center">
+              <MessageSquare className="w-5 h-5 text-[var(--accent)]" />
+            </div>
+            <p className="text-xs text-[var(--text-secondary)] max-w-[14rem]">Ask about price action, or click any candle on the chart to dig in.</p>
             <div className="flex flex-col gap-1.5 w-full">
               {suggestions.map((s) => (
                 <button
                   key={s}
                   onClick={() => send(s)}
-                  className="text-xs text-[#8888aa] hover:text-[#00ff88] bg-white/5 hover:bg-white/10 rounded-lg px-3 py-1.5 transition text-left"
+                  className="text-xs text-[var(--text-secondary)] hover:text-[var(--text-primary)] bg-white/5 hover:bg-white/10 rounded-lg px-3 py-1.5 transition text-left active:scale-[0.98]"
                 >
                   {s}
                 </button>
@@ -140,8 +143,8 @@ export function ChartChat({ symbol, focus, selection }: ChartChatProps) {
             <div
               className={`max-w-[92%] rounded-xl px-3 py-2 ${
                 m.role === "user"
-                  ? "bg-[#8b5cf6]/20 text-[#f0f0ff] text-xs leading-relaxed whitespace-pre-wrap"
-                  : "bg-white/5 text-[#c8c8e0]"
+                  ? "bg-[var(--accent-soft)] text-[var(--text-primary)] text-xs leading-relaxed whitespace-pre-wrap"
+                  : "bg-white/5 text-[var(--text-secondary)]"
               }`}
             >
               {m.role === "assistant" && m.technicals && (
@@ -149,14 +152,14 @@ export function ChartChat({ symbol, focus, selection }: ChartChatProps) {
               )}
               {m.role === "assistant" ? <Markdown>{m.content}</Markdown> : m.content}
               {m.citations && m.citations.length > 0 && (
-                <div className="mt-2 pt-2 border-t border-[#1e1e2e] flex flex-col gap-1">
+                <div className="mt-2 pt-2 border-t border-[var(--border)] flex flex-col gap-1">
                   {m.citations.map((c) => (
                     <a
                       key={c.index}
                       href={c.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-1.5 text-[10px] text-[#00ff88]/80 hover:text-[#00ff88] transition"
+                      className="flex items-center gap-1.5 text-[10px] text-[var(--accent)]/80 hover:text-[var(--accent)] transition"
                     >
                       <span className="font-mono">[{c.index}]</span>
                       <span className="truncate">{c.title}</span>
@@ -171,7 +174,7 @@ export function ChartChat({ symbol, focus, selection }: ChartChatProps) {
 
         {loading && (
           <div className="flex justify-start">
-            <div className="bg-white/5 rounded-xl px-3 py-2 flex items-center gap-2 text-xs text-[#8888aa]">
+            <div className="bg-white/5 rounded-xl px-3 py-2 flex items-center gap-2 text-xs text-[var(--text-secondary)]">
               <Loader2 className="w-3 h-3 animate-spin" /> analysing…
             </div>
           </div>
@@ -187,12 +190,12 @@ export function ChartChat({ symbol, focus, selection }: ChartChatProps) {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder={`Ask about ${symbol}…`}
-          className="flex-1 bg-white/5 rounded-lg px-3 py-2 text-xs text-[#f0f0ff] placeholder:text-[#44445a] outline-none focus:ring-1 focus:ring-[#8b5cf6]"
+          className="flex-1 bg-white/5 rounded-lg px-3 py-2 text-xs text-[var(--text-primary)] placeholder:text-[var(--text-muted)] outline-none focus:ring-2 focus:ring-[var(--accent-soft)] transition"
         />
         <button
           type="submit"
           disabled={loading || !input.trim()}
-          className="bg-[#8b5cf6] hover:bg-[#7c4ddb] disabled:opacity-40 rounded-lg p-2 transition"
+          className="bg-[var(--accent)] hover:bg-[var(--accent-strong)] disabled:opacity-40 rounded-lg p-2 transition active:scale-[0.95]"
         >
           <Send className="w-4 h-4 text-white" />
         </button>
